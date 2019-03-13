@@ -1,0 +1,11 @@
+human phrase : A task.finalDeadline is always after task.contributionDeadline  and revealDeadline after contributionDeadline
+
+property taskTiming {
+	always(
+		(
+			IexecHub.m_tasks[1].contributionDeadline > IexecHub.m_tasks[1].revealDeadline
+			&&
+			IexecHub.m_tasks[1].revealDeadline > IexecHub.m_tasks[1].finalDeadline
+		)
+	);
+}

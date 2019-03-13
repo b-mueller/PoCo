@@ -1,0 +1,12 @@
+1)It must not be possible to generate more than one TaskInitialize event in IexecHub.initialize(bytes32,uint256) function with same parameters TaskInitialize(bytes32 indexed taskid, address indexed workerpool);
+
+2)It must not be possible to generate more than one TaskClaimed event with same taskid
+
+3)It must not be possible to generate more than one AccurateContribution event with a given taskid, worker 
+
+4)It must not be possible to generate more than one FaultyContribution event with a given taskid, worker 
+
+5)Per task id, when status is completed, workerpool price of task must be equal the SUM of all iexecclerk.unlockAndRewardForContribution(task.dealid, worker, workerReward);  and iexecclerk.rewardForScheduling(task.dealid, totalReward);
+
+6) if _resultHash value equal 0 when call contribute. Does it create unexpected problems somewhere ? (reopen set consensus to 0 too )
+
