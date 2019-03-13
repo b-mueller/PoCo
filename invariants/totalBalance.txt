@@ -1,0 +1,5 @@
+property totalBalance {
+	always(
+		sum(Clerk.balance.stake) + sum(Clerk.balance.locked) == RLC.balance(Clerk)
+	);
+}

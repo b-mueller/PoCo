@@ -1,0 +1,27 @@
+property statusActive {
+	always(
+		(
+			Hub.m_tasks[1].status == ACTIVE
+			&&
+			prev(Hub.m_tasks[1].status) != ACTIVE
+		)
+		=>
+		(
+			(
+				FUNCTION == Hub.initialize(bytes32,uint256)
+				&&
+				1 == Hub.initialize(bytes32,uint256)[0]
+				&&
+				prev(Hub.m_tasks[1].status) == UNSET
+			)
+			||
+			(
+				FUNCTION == Hub.reopen(bytes32,uint256)
+				&&
+				1 == Hub.reopen(bytes32,uint256)[0]
+				&&
+				prev(Hub.m_tasks[1].status) == REVEALING
+			)
+		)
+	);
+}

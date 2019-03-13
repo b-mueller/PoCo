@@ -1,0 +1,17 @@
+property statusRevaling {
+	always(
+		(
+			Hub.m_tasks[1].status == REVEALING
+			&&
+			prev(Hub.m_tasks[1].status) != REVEALING
+		)
+		=>
+		(
+			FUNCTION == Hub.contribute(bytes32,bytes32,bytes32,address,bytes,bytes)
+			&&
+			1 == Hub.contribute(bytes32,bytes32,bytes32,address,bytes,bytes)[0]
+			&&
+			prev(Hub.m_tasks[1].status) == ACTIVE
+		)
+	);
+}

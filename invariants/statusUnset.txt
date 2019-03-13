@@ -1,0 +1,13 @@
+property statusUnset {
+	always(
+		(
+			Hub.m_tasks[1].status == UNSET
+			&&
+			prev(Hub.m_tasks[1].status) != UNSET
+		)
+		=>
+		(
+			False
+		)
+	);
+}

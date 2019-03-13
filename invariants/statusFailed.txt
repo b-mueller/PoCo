@@ -1,0 +1,15 @@
+property statusFailed {
+	always(
+		(
+			Hub.m_tasks[1].status == FAILED
+			&&
+			prev(Hub.m_tasks[1].status) != FAILED
+		)
+		=>
+		(
+			FUNCTION == Hub.claim(bytes32,bytes)
+			&&
+			1 == Hub.claim(bytes32,bytes)[0]
+		)
+	);
+}

@@ -1,0 +1,51 @@
+property loseLocked {
+	always(
+		(
+			Clerk.balance[1].locked < prev(Clerk.balance[1].locked)
+		)
+		=>
+		(
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].dealid].requester
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].dealid].workerpool.owner
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].contribution[1].status != UNSET
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				1 == address(0)
+			)
+			||
+			(
+				FUNCTION == Hub.claim(bytes32)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.claim(bytes32,bytes)[0]].dealid].requester
+			)
+			||
+			(
+				FUNCTION == Hub.claim(bytes32)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.claim(bytes32,bytes)[0]].dealid].workerpool.owner
+			)
+			||
+			(
+				FUNCTION == Hub.claim(bytes32)
+				&&
+				Hub.m_tasks[Hub.claim(bytes32,bytes)[0]].contribution[1].status != UNSET
+			)
+		)
+	);
+}

@@ -1,0 +1,33 @@
+property gainLocked {
+	always(
+		(
+			Clerk.balance[1].locked > prev(Clerk.balance[1].locked)
+		)
+		=>
+		(
+			(
+				FUNCTION == Clerk.matchOrder((address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,uint256,uint256,address,address,address,bytes32,bytes),(address,uint256,address,uint256,address,uint256,address,uint256,bytes32,uint256,uint256,address,address,string,bytes32,bytes))
+				&&
+				1 == Clerk.matchOrder((address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,uint256,uint256,address,address,address,bytes32,bytes),(address,uint256,address,uint256,address,uint256,address,uint256,bytes32,uint256,uint256,address,address,string,bytes32,bytes))[3][6]
+			)
+			||
+			(
+				FUNCTION == Clerk.matchOrder((address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,uint256,uint256,address,address,address,bytes32,bytes),(address,uint256,address,uint256,address,uint256,address,uint256,bytes32,uint256,uint256,address,address,string,bytes32,bytes))
+				&&
+				1 == Clerk.matchOrder((address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,address,address,address,bytes32,bytes),(address,uint256,uint256,bytes32,uint256,uint256,address,address,address,bytes32,bytes),(address,uint256,address,uint256,address,uint256,address,uint256,bytes32,uint256,uint256,address,address,string,bytes32,bytes))[2][0]
+			)
+			||
+			(
+				FUNCTION == Clerk.contribute(bytes32,bytes32,bytes32,address,bytes,bytes)
+				&&
+				1 == msg.sender
+			)
+			||
+			(
+				FUNCTION == Hub.claim(bytes32)
+				&&
+				1 == address(0)
+			)
+		)
+	);
+}

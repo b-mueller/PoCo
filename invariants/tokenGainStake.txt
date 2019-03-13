@@ -1,0 +1,57 @@
+property gainStake {
+	always(
+		(
+			Clerk.balance[1].stake > prev(Clerk.balance[1].stake)
+		)
+		=>
+		(
+			(
+				FUNCTION == Clerk.deposit(uint256)
+				&&
+				1 == msg.sender
+			)
+			||
+			(
+				FUNCTION == Clerk.depositFor(uitn256,address)
+				&&
+				1 == Clerk.depositFor(uitn256,address)[1]
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].dealid].app.owner
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].dealid].dataset.owner
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].dealid].workerpool.owner
+			)
+			||
+			(
+				FUNCTION == Hub.finalize(bytes32,bytes)
+				&&
+				Hub.m_tasks[Hub.finalize(bytes32,bytes)[0]].contribution[1].status == PROVED
+			)
+			||
+			(
+				FUNCTION == Hub.claim(bytes32)
+				&&
+				1 == Clerk.m_deals[Hub.m_tasks[Hub.claim(bytes32)[0]].dealid].requester
+			)
+			||
+			(
+				FUNCTION == Hub.claim(bytes32)
+				&&
+				Hub.m_tasks[Hub.claim(bytes32)[0]].contribution[1].status != UNSET
+			)
+		)
+	);
+}
